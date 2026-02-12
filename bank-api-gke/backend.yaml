@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: bank-api
-          image: REGION-docker.pkg.dev/PROJECT_ID/REPO_NAME/bank-api:TAG
+          image: us-central1-docker.pkg.dev/gcp-class-14/parths-bank-images/bank-api:v1
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080

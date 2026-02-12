@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: bank-web
-          image: REGION-docker.pkg.dev/PROJECT_ID/REPO_NAME/bank-web:TAG
+          image: us-central1-docker.pkg.dev/gcp-class-14/parths-bank-images/bank-web:v1
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 80
