@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bank-api
+  labels:
+    app: bank-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bank-api
+  template:
+    metadata:
+      labels:
+        app: bank-api
+    spec:
+      containers:
+        - name: bank-api
+          image: REGION-docker.pkg.dev/PROJECT_ID/REPO_NAME/bank-api:TAG
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+apiVersion: v1
+kind: Service
+metadata:
+  name: bank-api-svc
+  labels:
+    app: bank-api
+spec:
+  type: LoadBalancer
+  selector:
+    app: bank-api
+  ports:
+    - name: http
+      port: 80
+      targetPort: 8080
