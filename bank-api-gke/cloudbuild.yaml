@@ -16,3 +16,6 @@ steps:
 
 images:
 - us-central1-docker.pkg.dev/gcp-class-14/parths-bank-images/bank-api:$SHORT_SHA
+
+options:
+  logging: CLOUD_LOGGING_ONLY
