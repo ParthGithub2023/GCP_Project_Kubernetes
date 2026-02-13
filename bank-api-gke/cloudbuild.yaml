@@ -1,0 +1,18 @@
+steps:
+- name: gcr.io/cloud-builders/docker
+  id: Build
+  args:
+  - build
+  - -t
+  - us-central1-docker.pkg.dev/gcp-class-14/parths-bank-images/bank-api:$SHORT_SHA
+  - .
+  dir: bank-api-gke
+
+- name: gcr.io/cloud-builders/docker
+  id: Push
+  args:
+  - push
+  - us-central1-docker.pkg.dev/gcp-class-14/parths-bank-images/bank-api:$SHORT_SHA
+
+images:
+- us-central1-docker.pkg.dev/gcp-class-14/parths-bank-images/bank-api:$SHORT_SHA
