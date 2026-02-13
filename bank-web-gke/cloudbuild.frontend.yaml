@@ -4,7 +4,7 @@ steps:
   args:
   - build
   - -f
-  - FRONTEND_DOCKERFILE_NAME
+  - Dockerfile-before-https-first
   - -t
   - us-central1-docker.pkg.dev/gcp-class-14/parths-bank-images/bank-web:$SHORT_SHA
   - .
