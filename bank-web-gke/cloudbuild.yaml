@@ -8,7 +8,7 @@ steps:
   - -f
   - Dockerfile-before-https-first
   - -t
-  - us-central1-docker.pkg.dev/gcp-class-14/parths-bank-images/bank-web:$SHORT_SHA
+  - us-central1-docker.pkg.dev/gcp-class-14/parths-bank-images/bank-web:latest
   - --build-arg
   - REACT_APP_API_URL=http://35.239.119.95
   - .
@@ -17,45 +17,15 @@ steps:
   id: Push
   args:
   - push
-  - us-central1-docker.pkg.dev/gcp-class-14/parths-bank-images/bank-web:$SHORT_SHA
+  - us-central1-docker.pkg.dev/gcp-class-14/parths-bank-images/bank-web:latest
 
-- name: gcr.io/cloud-builders/gcloud
-  id: GetCredentials
+- name: gcr.io/cloud-builders/gke-deploy
+  id: Deploy
   args:
-  - container
-  - clusters
-  - get-credentials
-  - parths-bankproject-cluster
-  - --region
-  - us-central1
-  - --project
-  - gcp-class-14
-
-- name: gcr.io/cloud-builders/kubectl
-  id: Apply
-  args:
-  - apply
-  - -f
-  - bank-web-gke/frontend.yaml
-
-- name: gcr.io/cloud-builders/kubectl
-  id: UpdateImage
-  args:
-  - set
-  - image
-  - deployment/bank-web
-  - bank-web=us-central1-docker.pkg.dev/gcp-class-14/parths-bank-images/bank-web:$SHORT_SHA
-
-- name: gcr.io/cloud-builders/kubectl
-  id: Rollout
-  args:
-  - rollout
-  - status
-  - deployment/bank-web
-  - --timeout=180s
-
-images:
-- us-central1-docker.pkg.dev/gcp-class-14/parths-bank-images/bank-web:$SHORT_SHA
+  - run
+  - --filename=bank-web-gke/frontend.yaml
+  - --location=us-central1
+  - --cluster=parths-bankproject-cluster
 
 options:
   logging: CLOUD_LOGGING_ONLY
