@@ -21,3 +21,7 @@ steps:
   - --filename=bank-api-gke/backend.yaml
   - --location=us-central1
   - --cluster=parths-bankproject-cluster
+
+
+options:
+  logging: CLOUD_LOGGING_ONLY
