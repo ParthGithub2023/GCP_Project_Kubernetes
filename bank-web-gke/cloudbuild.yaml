@@ -19,15 +19,21 @@ steps:
   - push
   - us-central1-docker.pkg.dev/gcp-class-14/parths-bank-images/bank-web:$SHORT_SHA
 
-- name: gcr.io/cloud-builders/gke-deploy
-  id: Deploy Frontend to GKE
+- name: gcr.io/cloud-builders/bash
+  id: RenderManifest
+  entrypoint: bash
   args:
-  [
-  'run',
-  '--filename=bank-web-gke/frontend.yaml',
-  '--image=us-central1-docker.pkg.dev/gcp-class-14/parths-bank-images/bank-web:$SHORT_SHA',
-  '--cluster=parths-bankproject-cluster','--location=us-central1'
-  ]
+  - -c
+  - |
+    sed "s|IMAGE_PLACEHOLDER|us-central1-docker.pkg.dev/gcp-class-14/parths-bank-images/bank-web:$SHORT_SHA|g" bank-web-gke/frontend.yaml > bank-web-gke/frontend.rendered.yaml
+
+- name: gcr.io/cloud-builders/gke-deploy
+  id: Deploy
+  args:
+  - run
+  - --filename=bank-web-gke/frontend.rendered.yaml
+  - --location=us-central1
+  - --cluster=parths-bankproject-cluster
 
 images:
 - us-central1-docker.pkg.dev/gcp-class-14/parths-bank-images/bank-web:$SHORT_SHA
