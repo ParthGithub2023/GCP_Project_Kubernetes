@@ -4,7 +4,7 @@ steps:
   dir: bank-web-gke
   args:
   - build
-  - no-cache
+  - --no-cache
   - -f
   - Dockerfile-before-https-first
   - -t
@@ -24,9 +24,9 @@ steps:
   args:
   - run
   - --filename=bank-web-gke/frontend.yaml
-  - --image=us-central1-docker.pkg.dev/gcp-class-14/parths-bank-images/bank-web:$SHORT_SHA
   - --location=us-central1
   - --cluster=parths-bankproject-cluster
+  - --images=bank-web=us-central1-docker.pkg.dev/gcp-class-14/parths-bank-images/bank-web:$SHORT_SHA
 
 images:
 - us-central1-docker.pkg.dev/gcp-class-14/parths-bank-images/bank-web:$SHORT_SHA
