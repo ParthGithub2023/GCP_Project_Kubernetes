@@ -16,7 +16,8 @@ spec:
     spec:
       containers:
         - name: bank-web
-          image: us-central1-docker.pkg.dev/gcp-class-14/parths-bank-images/bank-web:v1
+          image: us-central1-docker.pkg.dev/gcp-class-14/parths-bank-images/bank-web:latest
+          imagePullPolicy: Always
           ports:
             - containerPort: 80
 ---
