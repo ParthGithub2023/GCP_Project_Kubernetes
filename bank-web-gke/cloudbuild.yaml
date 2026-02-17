@@ -1,6 +1,7 @@
 steps:
 - name: gcr.io/cloud-builders/docker
   id: Build
+  dir: bank-web-gke
   args:
   - build
   - -f
@@ -8,13 +9,20 @@ steps:
   - -t
   - us-central1-docker.pkg.dev/gcp-class-14/parths-bank-images/bank-web:$SHORT_SHA
   - .
-  dir: bank-web-gke
 
 - name: gcr.io/cloud-builders/docker
   id: Push
   args:
   - push
   - us-central1-docker.pkg.dev/gcp-class-14/parths-bank-images/bank-web:$SHORT_SHA
+
+- name: gcr.io/cloud-builders/gke-deploy
+  id: Deploy
+  args:
+  - run
+  - --filename=bank-web-gke/frontend.yaml
+  - --location=us-central1
+  - --cluster=parths-bankproject-cluster
 
 images:
 - us-central1-docker.pkg.dev/gcp-class-14/parths-bank-images/bank-web:$SHORT_SHA
