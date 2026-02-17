@@ -3,14 +3,14 @@ steps:
   id: Build
   dir: bank-web-gke
   args:
-  
   - build
   - -f
   - Dockerfile-before-https-first
   - -t
   - us-central1-docker.pkg.dev/gcp-class-14/parths-bank-images/bank-web:$SHORT_SHA
+  - --build-arg
+  - REACT_APP_API_URL=http://35.239.119.95/
   - .
-  - '--build-arg' ,'REACT_APP_API_URL=http://35.239.119.95/'
 
 - name: gcr.io/cloud-builders/docker
   id: Push
